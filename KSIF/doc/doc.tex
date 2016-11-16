@@ -1,0 +1,196 @@
+\documentclass[a4paper, 10pt]{article}
+\usepackage{kotex}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{stackrel}
+\usepackage{changepage}
+\usepackage{enumerate}
+
+%\marginparwidth 0pt	\oddsidemargin  0pt	\evensidemargin  0pt	\marginparsep 0pt	\topmargin   0pt	\textwidth   6.5 in		\textheight  8.5 in
+
+\usepackage{enumerate}
+
+% overline
+\newcommand{\ol}[1]{\overline{#1}}
+\newcommand{\diag}{\mathrm{diag}}
+
+% number set
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\renewcommand{\k}{\mathbf{k}}
+
+% some vectors 
+\newcommand{\x}{\mathbf{x}}
+\newcommand{\y}{\mathbf{y}}
+\newcommand{\e}{\mathbf{e}}
+\renewcommand{\u}{\mathbf{u}}
+\renewcommand{\v}{\mathbf{v}}
+
+% Matrix groups
+\newcommand{\Mnk}{\textrm{M}_n(\k)}
+\newcommand{\MnC}{\textrm{M}_n(\C)}
+\newcommand{\GnR}{\textrm{GL}_n(\R)}
+\newcommand{\GnC}{\textrm{GL}_n(\C)}
+\newcommand{\Symp}{\textrm{Symp}}
+\newcommand{\GL}{\textrm{GL}}
+\newcommand{\SL}{\textrm{SL}}
+\newcommand{\SU}{\textrm{SU}}
+
+% Stabiliser
+\newcommand{\stab}{\textrm{Stab}}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{prop}{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+
+\begin{document}
+% Document Info
+\title{Theoretical Foundation of KSIF Package}
+\author{\normalsize{운용3팀 유승현} }
+\date{2016.11.06}
+
+\maketitle
+	\section{Strategic Vector Space}
+We can define Strategy as a linear map as follows.
+		\begin{defn} Strategy
+			Strategy is a function $\S : \mathbb{T} \bigotimes \mathbb{F} \bigotimes \mathbb{D} \rightarrow \mathbb{T} \bigotimes  $
+
+		\end{defn}
+
+	\begin{description}
+	\item[Problem 1.] Show that the $ C^0 [k_{min}, k_{max}]$ with $\|\cdot\|_{\infty}$ is Normed Vector Space. 
+ 		\begin{proof}
+
+		Without loss of generality, we can set $ k_{min} = 0 $, and $ k_{max} = 1 $.\\
+		Let's define (+) and scalar multiplication. All functions below are the elements of $ C^0[0,1]$.
+
+		\begin{enumerate}[]
+		\item (addition) $(f+g)(x) = f(x)+g(x), ^{\forall}x \in [0,1]$.
+		\item (scalar multiplication) $ (af)(x) = af(x), ^{\forall}x \in [0,1]$.
+		\end{enumerate}
+
+		 Then the following holds, because (+) is commutative, and associative.
+
+ 		\begin{enumerate}[(1)]
+		\item $  f+g = g+f $;
+		\item $  (f+g)+h = f+(g+h) $;
+		\item there exists an zero function $ 0 \in  C^0 [0, 1]$ such that $ 0 + f = f $;
+		\item for each $f$ in $C^0[0,1]$ there exists an function $ -f \in C^0[0,1]$ such that $f+(-f)=0 $;
+		\item $c(f+g)=cf+cg, ^\forall c \in \R$;
+		\item $(c+d)f = cf + df, ^\forall c,d \in \R$;
+		\item $c(df) = (cd)f, ^\forall c,d \in \R$;
+		\item $1f = f $;
+		\end{enumerate}
+
+		So, the $ C^0[0,1] $ is vector space with addition and scalar multiplication.
+		Also, $C^0[0,1] $ is normed vector space with sup norm $\|\cdot \|_{\infty}$, 
+		because following holds.
+
+		\begin{enumerate}[(1)]
+		\item $\|f\|_\infty \geq 0$ and $\| f \|_\infty = 0$ iff $f=0$;
+			\\ $(\because)$  $ \|f\|_\infty \geq |f(x)| \geq 0$ for all $ x \in [0,1] $, and if $\| f \|_\infty=0$, then for all $x \in [0,1], f(x) = 0$, i.e. $f(x)=0$. Opposite direction is trivial.
+		\item $\|cf\|_\infty = |c|\| f \|_\infty$ for all $c \in \R$;
+			\\ $(\because)$ $\|cf\|_\infty = \sup_x |cf(x)| = \sup_x |c||f(x)| = |c| \sup_x |f(x)| = |c|\|f\|_\infty $.
+		\item $\|f+g\|_\infty \leq  \|f\|_\infty + \|g\|_\infty$ (triangle inequality);
+			\\ $(\because)$ $\|f+g\|_\infty = \sup_x |f(x) + g(x)| \leq \sup_x (|f(x)| + |g(x)|) \leq \sup_x |f(x)| + \sup_x |g(x)| = \|f\|_\infty + \|g\|_\infty$.
+		\end{enumerate}
+
+		So, the  $ C^0[0,1] $ is normed vector space.
+		\end{proof}
+
+
+	\item[Problem 2. (\textbf{Proposition 2})] Show any compact set $K$ in $\R^n$ is complete. 
+		\begin{proof}
+		
+		According to \textit{Heine-Borel theorem}, A subset of $\R^n$ is compact iff it is closed and bounded.
+		So, We have to show all \textit{Cauchy Sequence} in $K$ converges to a point in $K$. 
+		Because of $K$ is compact, all \textit{Cauchy Sequence} $\{x_n\}$ in $K$ has a convergent subsequence $\{x_{n_k}\}$ which converges to $x$ in $K$. Then, we can show that $\{x_n\}$ converges to $x$.\\
+		\\
+		 $(\because)$ We can find $N$ such that,
+		\begin{displaymath}
+			|x_n - x| \leq |x_n - x_{n_k}| + |x_{n_k} - x| \leq \frac{\varepsilon}{2} + \frac{\varepsilon}{2} =\varepsilon
+		\end{displaymath}
+		 for $ n \geq N$ and $ k \geq N_k \geq N$. In here, we use $n_k \geq k$ to show $ |x_n - x_{n_k}| \leq \frac{\varepsilon}{2}$ \\
+		So, $K$ is complete.
+		\end{proof}
+
+	\item[Problem 3. (Proof of \textbf{Theorem 1})]
+
+		\begin{thm}
+			Let $ C^0 [k_{min}, k_{max}]$ be the set of all continuous functions $ f: [k_{min}, k_{max}] \rightarrow \R$ with the sup norm, $ \|f\| = \sup_{k\in[k_{min}, k_{max}]} |f(k)|$. Then $C^0 [k_{min}, k_{max}]$ is a Banach space (complete normed vector space). 
+		\end{thm}
+		
+		\begin{proof}
+		We can use,
+			\begin{prop}\label{prop_1}
+				if $f_n \in C^0 [k_{min}, k_{max}]$ and $f_n \rightarrow f$ uniformly as $ n \rightarrow \infty$, then $f \in C^0[k_{min}, k_{max}]$.
+			\end{prop}
+			\begin{prop}\label{prop_2}
+				any compact set $K$ in $\R^n$ is complete.
+			\end{prop}
+		By \textbf{Problem 1}, it is suffices to show that $ C^0[k_{min},k_{max}]$ is complete, i.e. Cauchy Sequence $\{f_n\}$ converges to $f \in C^0[k_{min},k_{max}]$.
+		For all $x \in [k_{min}, k_{max}]$, there exist $N$ such that,
+		\begin{displaymath}
+			|f_n(x) - f_m(x)| \leq \sup_{y \in [k_{min}, k_{max}]} |f_n(y) - f_m(y)| = \|f_n - f_m \| \leq \varepsilon
+		\end{displaymath}
+		for all $n, m \geq N$.\\
+		So, $\{f_n(x)\}$ is Cauchy Sequence.\\
+		 And we know that $\R$ is complete, that means we can find converging points $f(x)$  of the Cauchy sequence $\{f_n(x)\}$ for each $x \in [k_{min}, k_{max}]$.
+		
+ 		Then we can show $\{f_n\} \rightarrow f$ uniformly as $n \rightarrow \infty$, because we can find sufficiently large $N$ such that,
+		\begin{displaymath}\begin{split}
+			|f_n(x) - f(x)| &\leq |f_n(x) - f_m(x)| + |f_m(x) - f(x)| \\
+						 &\leq \| f_n - f_m \| + |f_m(x) - f(x)| \\
+						&\leq  \frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \varepsilon
+		\end{split}
+		\end{displaymath}
+		for $ n \geq N$, and for all $ x \in [k_{min}, k_{max}]$. In here, we are free to choose $m$ (which must be depend on $x$) arbitrary large, that is $m \geq N_x \geq N$.
+		By \textbf{Proposition \ref{prop_1}}, $f \in C^0[k_{min},k_{max}]$. So, $C^0[k_{min}, k_{max}] $ is a Banach space.
+
+		\end{proof}
+
+	\item[Problem 4.] Show Bellman Operator $T$ satisfies \textit{monotonicity} and \textit{discounting}.
+		
+		\begin{defn}
+			Bellman Operator $\textbf{T}$ is,
+			\begin{displaymath}
+				(\textbf{T}V)(k_t) = \max_{k_{t+1}\in X} u(A_t(k_t)^\alpha + (1-\delta)k_t - k_{t+1}) + \beta V(k_{t+1})
+			\end{displaymath}
+			with concave $u$ and $V$.
+		\end{defn}
+
+		\begin{enumerate}[a]
+			\item (monotonicity)
+				\begin{proof}
+				Let any $f$ and $g \in C^0[k_{min}, k_{max}]$ satisfying $f(k) \leq g(k) $ for all $ k \in [k_{min}, k_{max}]$.
+				Then,
+				\begin{displaymath}\begin{split}
+					(\textbf{T}f)(k) &= \max_{k'\in X} u(A_t(k)^\alpha + (1-\delta)k - k') + \beta f(k')\\
+								&\leq \max_{k'\in X} u(A_t(k)^\alpha + (1-\delta)k - k') + \beta g(k')\\
+								&= (\textbf{T}g)(k)
+				\end{split}
+				\end{displaymath}
+				Here, the inequality holds because $\beta >0$.
+				\end{proof}
+			\item (discounting)
+				\begin{proof}
+				For all $f \in C^0[k_{min},k_{max}]$, $a \geq 0$, and $ k \in [k_{min}, k_{max}]$,
+				\begin{displaymath}\begin{split}
+					[\textbf{T}(f+a)](k) &= \max_{k'\in X} \{u(A_t(k)^\alpha + (1-\delta)k - k') + \beta( f(k') + a)\}\\
+									&= \max_{k'\in X} \{u(A_t(k)^\alpha + (1-\delta)k - k') + \beta f(k') + \beta a\}\\
+									&= \max_{k'\in X} \{u(A_t(k)^\alpha + (1-\delta)k - k') + \beta f(k')\} + \beta a\\
+									&= (\textbf{T}f)(k) + \beta a\\
+				\end{split}\end{displaymath}
+				So if we set $\beta$ as modulus, then $[\textbf{T}(f+a)](k) \leq (\textbf{T}f)(k) + \beta a$ holds.
+				\end{proof}
+		\end{enumerate}
+		
+	\end{description}
+\end{document}
