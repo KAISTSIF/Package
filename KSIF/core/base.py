@@ -40,14 +40,14 @@ __author__ = 'Seung Hyeon Yu'
 __email__  = 'rambor12@business.kaist.ac.kr'
 
 import random
-
+from abc import ABCMeta, abstractmethod
 from KSIF.core import io
 from KSIF.util import math, operation
 
 
 class Strategy(dict):
     """
-    전략 클래스
+    Abstract 전략 클래스
 
     dictionary를 상속받아 필요한 parameter 저장
     buildport 메소드로 portfolio 생성
@@ -58,10 +58,9 @@ class Strategy(dict):
     def __init__(self, *args, **kwargs):
         super(Strategy, self).__init__(*args, **kwargs)
         self.keylist = super(Strategy, self).keys()
-        self.freq = 'Month'
-        self.type = 'Screening'
-        self.name = 'Basic'
-        self.part = 0.25
+        self.name = 'abstract'
+        self.type = None
+
 
     def __setitem__(self, key, value):
         super(Strategy, self).__setitem__(key, value)
@@ -121,12 +120,12 @@ class Strategy(dict):
         for key, value in y.items():
             self[key] += value
 
+    @abstractmethod
     def buildport(self, input):
-        port = input
-        for key, value in self.items():
-            port = port[(port[key] >= value - self.part) & (port[key] < value)]
-
-        return port
+        """
+        Require Override!!
+        """
+        abstract
 
 
 def backtest(port, start_date='1700-01-01', end_date='2200-01-01', dates=None):
@@ -159,6 +158,25 @@ def scoring(x):
 
     return score
 
+
+class strategy(Strategy):
+    """
+    예제 0 : Basic Strategy
+    """
+    
+    def __init__(self, *args, **kwargs):
+        super(strategy, self).__init__(*args, **kwargs)
+        self.name = 'basic'
+        self.freq = 'Month'
+        self.type = 'Screening'
+        self.part = 0.25
+
+    def buildport(self, input)
+        port = input
+        for key, value in self.items():
+            port = port[(port[key] >= value - self.part) & (port[key] < value)]
+
+        return port
 
 class strategy_PERr(Strategy):
     """
