@@ -272,7 +272,7 @@ def backTest(portfolio_0_1, marketcap_weight_verified, adj_price, BM_index, \
             value_portfolio_initial = target_num_tohold_temp * price_portfolio_in_day 
             value_portfolio_initial = value_portfolio_initial.sum()
           
-            
+            ##
             if seedmoney_init * 1.03 <= value_portfolio_initial:
                 seedmoney *= 0.995
                 continue
