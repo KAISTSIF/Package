@@ -44,7 +44,6 @@ from abc import ABCMeta, abstractmethod
 from KSIF.core import io
 from KSIF.util import math, operation
 
-
 class Strategy(dict):
     """
     Abstract 전략 클래스
